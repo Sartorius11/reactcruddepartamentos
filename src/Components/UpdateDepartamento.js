@@ -1,93 +1,70 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import Global from '../Global';
-
-
 export default class UpdateDepartamento extends Component {
     cajaNumeroRef = React.createRef();
     cajaNombreRef = React.createRef();
     cajaLocalidadRef = React.createRef();
-
-    state={
-        departamento:{},
-        status:false
+    state = {
+        departamento: {},
+        status: false
     }
-    buscarDepartamentos= () =>{
+    buscarDepartamento = () => {
         var id = this.props.id;
-        var request= "/api/departamentos/"+ id;
-        var url = Global.urlDepartamentos+ request;
-        console.log(url);
-        axios.get(url).then(reponse=>{
+        var request = "/api/departamentos/" + id;
+        var url = Global.urlDepartamentos + request;
+        axios.get(url).then(response => {
             this.setState({
-                departamento: reponse.data,
-               
+                departamento: response.data
             });
         });
     }
-
-    UpdateDepartamento = (e) =>{
+    updateDepartamento = (e) => {
         e.preventDefault();
-        var num =parseInt(this.cajaNumeroRef.current.value);
+        var num = parseInt(this.cajaNumeroRef.current.value);
         var nom = this.cajaNombreRef.current.value;
         var loc = this.cajaLocalidadRef.current.value;
-
-        var data= {
+        var data = {
             numero: num,
             nombre: nom,
             localidad: loc
-        };  
-       
-
-        var request='/api/departamentos';
-        var url= Global.urlDepartamentos+request;
-        axios.put(url,data).then(reponse=>{
-          
+        };
+        var request = "/api/departamentos";
+        var url = Global.urlDepartamentos + request;
+        axios.put(url, data).then(response => {
             this.setState({
-                status: true,
-                mensanje: "Departamento modificado!"
-                
+                status: true
             });
         });
-
     }
-
-    componentDidMount=()=>{
-        this.buscarDepartamentos();
+    componentDidMount = () => {
+        this.buscarDepartamento();
     }
-
   render() {
     return (
-
-      <div>
-        <h1>UpdateDepartamento</h1>
-        {
-            this.state.status &&
-            (<h1 style={{color:"blue"}}>{this.state.mensanje}</h1>)
-        }
-
-
-        <form style={{width:"60vw", margin:"auto"}}>
-            <input type="hidden" ref={this.cajaNumeroRef} defaultValue={this.state.departamento.numero}/><br/>
-
-
-            <label>Nombre: </label>
-            <input type="text" className='form-control' 
-            placeholder={this.state.departamento.nombre} ref={this.cajaNombreRef}/><br/>
-       
-
-
-            <label>Localidad: </label>
-            <input type="text"  className='from-control' placeholder={this.state.departamento.localidad}ref={this.cajaLocalidadRef}/><br/>
-            <br/>
-                <hr/>
-
-            <button className = 'btn btn-info' onClick={this.UpdateDepartamento}>
-                Modificar departamento
-            </button>
-
-
-        </form>
-      </div>
+        <div>
+            <h1>Update Departamento</h1>
+            {
+                this.state.status == true && 
+                (<h1 style={{color:"blue"}}>Departamento modificado!!!</h1>)
+            }
+            <form style={{width: "500px", margin: "0 auto"}}>
+                <input type="hidden" value={this.state.departamento.numero}
+                    ref={this.cajaNumeroRef}/>
+                <label>Nombre: </label>
+                <input type="text" className='form-control'
+                    defaultValue={this.state.departamento.nombre}
+                    ref={this.cajaNombreRef}/><br/>
+                <label>Localidad: </label>
+                <input type="text" className='form-control'
+                    defaultValue={this.state.departamento.localidad}
+                    ref={this.cajaLocalidadRef}/><br/>
+                <button className='btn btn-info'
+                    onClick={this.updateDepartamento}>
+                    Modificar departamento
+                </button>
+            </form>
+        </div>
     )
   }
 }
