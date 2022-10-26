@@ -49,7 +49,7 @@ export default class UpdateDepartamento extends Component {
                 (<h1 style={{color:"blue"}}>Departamento modificado!!!</h1>)
             }
             <form style={{width: "500px", margin: "0 auto"}}>
-                <input type="hidden" value={this.state.departamento.numero}
+                <input type="hidden" defaultValue={this.state.departamento.numero}
                     ref={this.cajaNumeroRef}/>
                 <label>Nombre: </label>
                 <input type="text" className='form-control'
