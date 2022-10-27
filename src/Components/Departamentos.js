@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 //IMPORTAMOS Axios para leer los doumentos JSON
 import axios from 'axios'
-import Global from './../Global';
+import Global from '../Global';
 //importamos la imagen
 import loading from './../assets/images/loading.gif'
 import { NavLink } from 'react-router-dom';
