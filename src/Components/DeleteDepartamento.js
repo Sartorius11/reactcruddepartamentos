@@ -1,63 +1,44 @@
-import React, { Component } from 'react'
-
-//NECESITAMOS AXIOS Y GLOBAL PARA PODER ELEIMINAR 
+import React, { Component } from 'react';
 import axios from 'axios';
 import Global from '../Global';
-import { Navigate, NavLink } from 'react-router-dom';
-
-
-
+import { Navigate } from 'react-router-dom';
 export default class DeleteDepartamento extends Component {
-
-    state={
-        status:false,
+    state = {
+        status: false
     }
-
-
-    deleteDepartamento = (e) =>{
+    deleteDepartamento = (e) => {
         e.preventDefault();
-        //CAMBIAR EL STATE 
         var numero = this.props.id;
-        var request="/api/departamentos"+ numero;
-        var url= Global.urlDepartamentos+request;
-
-        axios.delete(url).then(response=>{
+        var request = "/api/departamentos/" + numero;
+        var url = Global.urlDepartamentos + request;
+        axios.delete(url).then(response => {
             this.setState({
-                status:true
+                status: true
             });
         });
     }
-
   render() {
-
-    //TENEMOS QUE DIBUJAR AQUI EL <h2></h2>
+    //TENEMOS QUE DIBUJAR AQUI EL <h2>
     //UN IF CON EL STATE
-    if (this.state.status==true){
-        return(<Navigate to="/"/>);
+    if (this.state.status == true) {
+        return (<Navigate to="/"/>);
     }
-
-    
-
-
     return (
-      <div>
-
-        <h1>
-             ¿DeleteDepartamento 
-             <span style={{color:"red"}}> 
+        <div>
+            <h1>
+                ¿Delete Departamento:
+                <span style={{color:"red"}}>
                     {this.props.id}
-            </span> ?
-        </h1>
-
-        <form onSubmit={this.deleteDepartamento}>
-            <button className='btn btn-danger'>
-                    Eliminar departamento
-            </button>
-
-        </form>
-             
-       
+                </span>?
+            </h1>
+            <form onSubmit={this.deleteDepartamento}>
+                    <button className='btn btn-danger'>
+                        Eliminar departamento
+                    </button>
+            </form>            
         </div>
     )
   }
 }
+
+
